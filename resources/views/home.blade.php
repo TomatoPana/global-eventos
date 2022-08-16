@@ -125,6 +125,10 @@
         </div>
     </div>
 
+    <div class="position-fixed bottom-0 end-0 p-3">
+        <a class="btn btn-success" href="/posts/create" role="button">Crear Post 🪄</a>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous">
     </script>

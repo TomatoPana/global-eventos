@@ -63,12 +63,57 @@
     </nav>
 
     <div class="container">
+        <div class="row py-2">
+            <h1 class="text-center">Crea Algo Magico!</h1>
+        </div>
 
+        <div class="row py-2">
+            <div class="input-group input-group-lg">
+                <input type="text" class="form-control" placeholder="Ingresa el titulo de tu creacion"
+                    aria-label="Ingresa el titulo de tu creacion!" aria-describedby="button-addon2">
+            </div>
+        </div>
+
+        <div class="row pt-4">
+            <h2 class="text-center"><i>🌟Algunos hashtags? 7u7🌟</i></h2>
+        </div>
+
+        <div class="row py-2">
+            <div class="input-group input-group-lg">
+                <input type="text" class="form-control" placeholder="Coloca tus hashtags!!! ❤️❤️❤️"
+                    aria-label="Coloca tus hashtags!!! ❤️❤️❤️" aria-describedby="button-addon2">
+            </div>
+        </div>
+
+        <div class="row pt-4">
+            <h2 class="text-center">🌈 Adelante, crea algo magico 🌈</h2>
+        </div>
+
+    </div>
+
+    <div class="container">
+        <div id="editor"></div>
+    </div>
+
+    <div class="position-fixed bottom-0 end-0 p-3">
+        <button class="btn btn-success" id="btn-post-create">Guardar Creacion! 🪄</butt>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous">
     </script>
+    <script src="/js/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .then(editor => {
+                window.editor = editor;
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+    <script src="/js/post.create.js"></script>
 </body>
 
 </html>
