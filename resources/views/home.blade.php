@@ -32,7 +32,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+                        <a class="nav-link active" aria-current="page" href="/">Inicio</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Perfil</a>
@@ -77,9 +77,9 @@
             <h2 class="text-center"><i>💥Posts Recientes💥</i></h2>
         </div>
 
-        <div class="row">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
             @foreach ($posts as $post)
-                <div class="col-sm-12 col-md-4 col-lg-3">
+                <div class="col">
                     <div class="card">
                         <img src="/storage/thumb-1920-941898.jpg" class="card-img-top" alt="...">
                         <div class="card-body">

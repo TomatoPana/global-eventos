@@ -15,6 +15,20 @@
             font-family: 'Open Sans', sans-serif;
         }
     </style>
+    <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+    <script>
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('c65bb16b19878dade050', {
+            cluster: 'us2'
+        });
+
+        var channel = pusher.subscribe('my-channel');
+        channel.bind('my-event', function(data) {
+            alert(JSON.stringify(data));
+        });
+    </script>
 </head>
 
 <body>
@@ -32,7 +46,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+                        <a class="nav-link active" aria-current="page" href="/">Inicio</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Perfil</a>
@@ -49,12 +63,87 @@
     </nav>
 
     <div class="container">
+        <div class="row py-2">
+            <h1 class="text-center">Editar Post</h1>
+        </div>
 
+        <div class="row py-2">
+            <div class="input-group input-group-lg">
+                <input name="title" value="{{ $post->title }}" type="text" class="form-control" placeholder="Ingresa el titulo de tu creacion"
+                    aria-label="Ingresa el titulo de tu creacion!" aria-describedby="button-addon2">
+            </div>
+        </div>
+
+        <div class="row py-2">
+            <h1 class="text-center">Cuentanos un poco acerca de tu post uwu</h1>
+        </div>
+
+        <div class="row py-2">
+            <div class="input-group input-group-lg">
+                <input name="description" value="{{ $post->title }}" type="text" class="form-control" placeholder="Una descripcion bien pro!"
+                    aria-label="Una descripcion bien pro!" aria-describedby="button-addon2">
+            </div>
+        </div>
+
+        <div class="row pt-4">
+            <h2 class="text-center"><i>🌟Algunos hashtags? 7u7🌟</i></h2>
+        </div>
+
+        <div class="row py-2">
+            <div class="input-group input-group-lg">
+                <input name="hashtags" value="{{ $post->hashtags->pluck('hashtag')->join(' ') }}"type="text" class="form-control" placeholder="Coloca tus hashtags!!! ❤️❤️❤️"
+                    aria-label="Coloca tus hashtags!!! ❤️❤️❤️" aria-describedby="button-addon2">
+            </div>
+        </div>
+
+        <div class="row pt-4">
+            <h2 class="text-center">🌈 Adelante, que siga la inspiracion 🌈</h2>
+        </div>
+
+    </div>
+
+    <div class="container">
+        <div id="editor">
+            {{ $post->body }}
+        </div>
+    </div>
+
+    <div class="position-fixed bottom-0 start-0 p-3">
+        <a class="btn btn-secondary" href="/" role="button">Ir al home! 🏠</a>
+    </div>
+
+    <div class="position-fixed bottom-0 end-0 p-3">
+        <button class="btn btn-success" id="btn-post-create">Guardar Creacion! 🪄</button>
+        @csrf
+    </div>
+
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Publicacion hecha!</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Tu publicacion se ha actualizado y se te llevara a ella en unos segundos!
+            </div>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous">
     </script>
+    <script src="/js/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .then(editor => {
+                window.editor = editor;
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+    <script src="/js/post.create.js"></script>
 </body>
 
 </html>
