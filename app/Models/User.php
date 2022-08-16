@@ -7,7 +7,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+/**
+ * @property string $first_names
+ * @property string $last_names
+ * @property string $full_name
+ * @property Carbon $birthdate
+ * @property string $email
+ * @property string $password
+ */
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -18,7 +29,9 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'first_names',
+        'last_names',
+        'birthdate',
         'email',
         'password',
     ];
@@ -39,6 +52,18 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'birthdate' => 'date:Y-m-d',
     ];
+
+    public function fullName(): Attribute
+    {
+        return Attribute::make(
+            get: fn(string|null $name, array $data) => $data['first_names'] . ' ' . $data['last_names']
+        );
+    }
+
+    public function friends(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'user_has_friends', 'friend_id');
+    }
 }
