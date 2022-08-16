@@ -101,9 +101,36 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|max:255',
+            'description' => 'sometimes|max:255',
+            'body' => 'required',
+            'hashtags' => 'required|string',
+        ]);
+
+        if($validator->fails()) {
+            return response()->json(
+                $validator->errors()->all(),
+                Response::HTTP_UNPROCESSABLE_ENTITY
+            );
+        }
+
+        $hastags = explode(' ', $request->input('hashtags'));
+        $hastags = collect($hastags)->map(function($hashtag) {
+            return Hashtag::firstOrCreate(['hashtag' => $hashtag]);
+        });
+
+        /** @var Post */
+        $post->update([
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            'body' => $request->input('body'),
+            'user_id' => auth()->id(),
+        ]);
+        $post->hashtags()->syncWithoutDetaching($hastags->pluck('id'));
+        return response()->json($post, Response::HTTP_ACCEPTED);
     }
 
     /**
@@ -112,8 +139,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return response()->json(null, Response::HTTP_NO_CONTENT);
     }
 }

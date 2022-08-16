@@ -134,6 +134,8 @@
     </script>
     <script src="/js/ckeditor.js"></script>
     <script>
+        window.post = {};
+        window.post.id = {{ $post->id }}
         ClassicEditor
             .create(document.querySelector('#editor'))
             .then(editor => {
@@ -143,7 +145,7 @@
                 console.error(error);
             });
     </script>
-    <script src="/js/post.create.js"></script>
+    <script src="/js/post.edit.js"></script>
 </body>
 
 </html>

@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Events\MyEvent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -54,6 +56,26 @@ class User extends Authenticatable
     protected $casts = [
         'birthdate' => 'date:Y-m-d',
     ];
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::created(function ($model) {
+            broadcast(new MyEvent($model->toJson()));
+        });
+
+        static::updated(function ($model) {
+            broadcast(new MyEvent($model->toJson()));
+        });
+
+        static::deleted(function ($model) {
+            broadcast(new MyEvent($model->toJson()));
+        });
+    }
 
     public function fullName(): Attribute
     {

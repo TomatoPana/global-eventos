@@ -4,11 +4,12 @@ button.addEventListener('click', function (e) {
     const csrfToken = document.querySelector('input[name=_token]').value;
     const formData = new FormData();
     formData.append('_token', csrfToken);
+    formData.append('_method', 'PATCH');
     formData.append('title', document.querySelector('input[name=title]').value);
     formData.append('description', document.querySelector('input[name=description]').value);
     formData.append('body', window.editor.getData());
     formData.append('hashtags', document.querySelector('input[name=hashtags]').value);
-    fetch('/posts', {
+    fetch('/posts/' + window.post.id, {
         method: 'POST',
         body: formData
     }).then(function (response) {

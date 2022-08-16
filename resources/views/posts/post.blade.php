@@ -72,7 +72,7 @@
                     <hr>
                     <div class="btn-group" role="group" aria-label="Basic example">
                         <a role="button" href="/posts/{{$post->id}}/edit" class="btn btn-secondary">Editar</a>
-                        <a role="button" class="btn btn-danger">Eliminar</a>
+                        <button id="delete_post" class="btn btn-danger">Eliminar</button>
                     </div>
                     <p class="text-muted"><i>Solo tu puedes ver los controles 👀</i></p>
                 @endif
@@ -88,6 +88,42 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous">
+    </script>
+
+    <script>
+
+        const delete_post = document.getElementById('delete_post');
+        delete_post.addEventListener('click', function(e) {
+            e.preventDefault();
+            const csrfToken = document.querySelector('input[name=_token]').value;
+            const formData = new FormData();
+            formData.append('_token', csrfToken);
+
+            if(confirm('¿Estas seguro de eliminar este post?')) {
+                fetch('/posts/' + window.post.id, {
+                    method: 'DELETE',
+                    body:
+                }).then(function (response) {
+                    if (response.ok) {
+                        response.json().then(function (data) {
+                            const toastTrigger = document.getElementById('liveToastBtn')
+                            const toastLiveExample = document.getElementById('liveToast')
+                            if (toastTrigger) {
+                                toastTrigger.addEventListener('click', () => {
+                                    const toast = new bootstrap.Toast(toastLiveExample)
+                                    toast.show()
+                                    window.location.href = '/';
+                                })
+                            }
+                        });
+                    }
+                }).catch(function (error) {
+                    console.error(error);
+                });
+
+            }
+        });
+
     </script>
 </body>
 
