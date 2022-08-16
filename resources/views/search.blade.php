@@ -15,26 +15,12 @@
             font-family: 'Open Sans', sans-serif;
         }
     </style>
-    <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
-    <script>
-        // Enable pusher logging - don't include this in production
-        Pusher.logToConsole = true;
-
-        var pusher = new Pusher('c65bb16b19878dade050', {
-            cluster: 'us2'
-        });
-
-        var channel = pusher.subscribe('my-channel');
-        channel.bind('my-event', function(data) {
-            alert(JSON.stringify(data));
-        });
-    </script>
 </head>
 
 <body>
     <nav class="navbar sticky-top navbar-dark bg-primary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="/">
                 <img src="/storage/Ceti.webp" alt="" width="30" height="30">
                 CETI - IDS
             </a>
@@ -59,77 +45,85 @@
                     </li>
                 </ul>
             </div>
-        </div>
     </nav>
-
     <div class="container">
         <div class="row py-2">
-            <h1 class="text-center">Crear Post</h1>
+            <h1 class="text-center">Bienvenido al Global de Eventos!</h1>
         </div>
-
-        <div class="row py-2">
+        <div class="row">
             <div class="input-group input-group-lg">
-                <input name="title" type="text" class="form-control" placeholder="Ingresa el titulo de tu creacion"
-                    aria-label="Ingresa el titulo de tu creacion!" aria-describedby="button-addon2">
-            </div>
-        </div>
-
-        <div class="row py-2">
-            <h1 class="text-center">Cuentanos un poco acerca de tu post uwu</h1>
-        </div>
-
-        <div class="row py-2">
-            <div class="input-group input-group-lg">
-                <input name="description" type="text" class="form-control" placeholder="Una descripcion bien pro!"
-                    aria-label="Una descripcion bien pro!" aria-describedby="button-addon2">
+                <input id="text-search" type="text" class="form-control" placeholder="Busca algo!" aria-label="Busca algo!"
+                    aria-describedby="button-search">
+                <button class="btn btn-outline-secondary" type="button" id="button-search">Vamos!</button>
             </div>
         </div>
 
         <div class="row pt-4">
-            <h2 class="text-center"><i>🌟Algunos hashtags? 7u7🌟</i></h2>
-        </div>
-
-        <div class="row py-2">
-            <div class="input-group input-group-lg">
-                <input name="hashtags" type="text" class="form-control" placeholder="Coloca tus hashtags!!! ❤️❤️❤️"
-                    aria-label="Coloca tus hashtags!!! ❤️❤️❤️" aria-describedby="button-addon2">
-            </div>
-        </div>
-
-        <div class="row pt-4">
-            <h2 class="text-center">🌈 Adelante, crea algo magico 🌈</h2>
+            <h2 class="text-center"><i>🌟Hashtags encontrados🌟</i></h2>
         </div>
 
     </div>
+    <div class="container text-center">
 
-    <div class="container">
-        <div id="editor"></div>
+        @if($hashtags->count() === 0)
+            <div class="row">
+                <h3 class="text-center">😔 No se encontraron hashtags 😔</h3>
+            </div>
+        @else
+            <div class="pt-2 d-flex justify-content-around flex-wrap-reverse">
+                <!-- Este contenido saldra de la base de datos -->
+                @foreach ($hashtags as $hashtag)
+                    <button type="button" class="btn btn-outline-success">{{ $hashtag->hashtag }}</button>
+                @endforeach
+            </div>
+        @endif
+
+    </div>
+
+    <div class="container pt-4">
+        <div class="row">
+            <h2 class="text-center"><i>💥Posts Encontrados💥</i></h2>
+        </div>
+
+        @if ($posts->count() === 0)
+            <div class="row">
+                <h3 class="text-center">😭 No hay posts disponibles 😭</h3>
+            </div>
+        @else
+
+            <div class="row">
+                @foreach ($posts as $post)
+                    <div class="col-sm-12 col-md-4 col-lg-3">
+                        <div class="card">
+                            <img src="/storage/thumb-1920-941898.jpg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $post->title }}</h5>
+                                <p class="card-text">
+                                    {{ $post->description }}
+                                </p>
+                                <a href="/posts/{{ $post->id }}" class="btn btn-primary">Seguir Leyendo ➡️</a>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+
+        @endif
+    </div>
+
+    <div class="position-fixed bottom-0 end-0 p-3">
+        <a class="btn btn-success" href="/posts/create" role="button">Crear Post 🪄</a>
     </div>
 
     <div class="position-fixed bottom-0 start-0 p-3">
         <a class="btn btn-secondary" href="/" role="button">Ir al home! 🏠</a>
     </div>
 
-    <div class="position-fixed bottom-0 end-0 p-3">
-        <button class="btn btn-success" id="btn-post-create">Guardar Creacion! 🪄</button>
-        @csrf
-    </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous">
     </script>
-    <script src="/js/ckeditor.js"></script>
-    <script>
-        ClassicEditor
-            .create(document.querySelector('#editor'))
-            .then(editor => {
-                window.editor = editor;
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    </script>
-    <script src="/js/post.create.js"></script>
+
+    <script src="/js/home.js"></script>
 </body>
 
 </html>

@@ -52,9 +52,9 @@
         </div>
         <div class="row">
             <div class="input-group input-group-lg">
-                <input type="text" class="form-control" placeholder="Busca algo!" aria-label="Busca algo!"
-                    aria-describedby="button-addon2">
-                <button class="btn btn-outline-secondary" type="button" id="button-addon2">Vamos!</button>
+                <input id="text-search" type="text" class="form-control" placeholder="Busca algo!" aria-label="Busca algo!"
+                    aria-describedby="button-search">
+                <button class="btn btn-outline-secondary" type="button" id="button-search">Vamos!</button>
             </div>
         </div>
 
@@ -132,6 +132,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous">
     </script>
+
+    <script src="/js/home.js"></script>
 </body>
 
 </html>

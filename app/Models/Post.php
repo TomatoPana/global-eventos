@@ -38,8 +38,8 @@ class Post extends Model
         return $this->belongsToMany(PostComment::class);
     }
 
-    public function hastags(): BelongsToMany
+    public function hashtags(): BelongsToMany
     {
-        return $this->belongsToMany(Hashtag::class);
+        return $this->belongsToMany(Hashtag::class, 'post_has_hashtags');
     }
 }
