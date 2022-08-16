@@ -13,14 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('post_has_hastags', function (Blueprint $table) {
             $table->id();
-            $table->string('first_names');
-            $table->string('last_names');
-            $table->date('birthdate');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->rememberToken();
+            $table->foreignId('post_id')->constrained();
+            $table->foreignId('hashtag_id')->constrained();
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('post_has_hastags');
     }
 };
