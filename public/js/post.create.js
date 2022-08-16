@@ -1,6 +1,6 @@
 const button = document.querySelector('#btn-post-create');
 
-button.addEventListener('click', function(e) {
+button.addEventListener('click', function (e) {
     const csrfToken = document.querySelector('input[name=_token]').value;
     const formData = new FormData();
     formData.append('_token', csrfToken);
@@ -11,13 +11,20 @@ button.addEventListener('click', function(e) {
     fetch('/posts', {
         method: 'POST',
         body: formData
-    }).then(function(response) {
-        if(response.ok) {
-            response.json().then(function(data) {
-                console.log(data);
+    }).then(function (response) {
+        if (response.ok) {
+            response.json().then(function (data) {
+                const toastTrigger = document.getElementById('liveToastBtn')
+                const toastLiveExample = document.getElementById('liveToast')
+                if (toastTrigger) {
+                    toastTrigger.addEventListener('click', () => {
+                        const toast = new bootstrap.Toast(toastLiveExample)
+                        toast.show()
+                    })
+                }
             });
         }
-    }).catch(function(error) {
+    }).catch(function (error) {
         console.error(error);
     });
 });

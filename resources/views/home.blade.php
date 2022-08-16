@@ -66,7 +66,7 @@
     <div class="container text-center">
         <div class="pt-2 d-flex justify-content-around flex-wrap-reverse">
             <!-- Este contenido saldra de la base de datos -->
-            @foreach (\App\Models\Hashtag::limit(6)->get() as $hashtag)
+            @foreach ($hashtags as $hashtag)
                 <button type="button" class="btn btn-outline-success">{{ $hashtag->hashtag }}</button>
             @endforeach
         </div>
@@ -78,50 +78,20 @@
         </div>
 
         <div class="row">
-            <div class="col-sm-12 col-md-4 col-lg-3">
-                <div class="card">
-                    <img src="/storage/thumb-1920-941898.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
-                        <a href="#" class="btn btn-primary">Seguir Leyendo ➡️</a>
+            @foreach ($posts as $post)
+                <div class="col-sm-12 col-md-4 col-lg-3">
+                    <div class="card">
+                        <img src="/storage/thumb-1920-941898.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $post->title }}</h5>
+                            <p class="card-text">
+                                {{ $post->description }}
+                            </p>
+                            <a href="/posts/{{ $post->id }}" class="btn btn-primary">Seguir Leyendo ➡️</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-sm-12 col-md-4 col-lg-3">
-                <div class="card">
-                    <img src="/storage/thumb-1920-941898.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
-                        <a href="#" class="btn btn-primary">Seguir Leyendo ➡️</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-12 col-md-4 col-lg-3">
-                <div class="card">
-                    <img src="/storage/thumb-1920-941898.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
-                        <a href="#" class="btn btn-primary">Seguir Leyendo ➡️</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-12 col-md-4 col-lg-3">
-                <div class="card">
-                    <img src="/storage/thumb-1920-941898.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
-                        <a href="#" class="btn btn-primary">Seguir Leyendo ➡️</a>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 
